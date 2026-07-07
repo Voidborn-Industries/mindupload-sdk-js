@@ -184,9 +184,3 @@ Same API, same conventions, in every language:
 | **Python** | `pip install mindupload` | [Voidborn-Industries/mindupload-sdk-python](https://github.com/Voidborn-Industries/mindupload-sdk-python) |
 | **Go** | `go get github.com/Voidborn-Industries/mindupload-sdk-go` | [Voidborn-Industries/mindupload-sdk-go](https://github.com/Voidborn-Industries/mindupload-sdk-go) |
 | **JavaScript / TypeScript**  ← you are here | `npm install mindupload` | [Voidborn-Industries/mindupload-sdk-js](https://github.com/Voidborn-Industries/mindupload-sdk-js) |
-
----
-
-<div align="center">
-<sub><img src="https://www.mindupload.app/icons/Icon-512.png" width="13" align="top" alt="" /> Built by **Mind Upload** · Generated from the API spec · MIT License</sub>
-</div>
