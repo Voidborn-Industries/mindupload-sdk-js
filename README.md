@@ -1,21 +1,46 @@
+<div align="center">
+
+<a href="https://mindupload.app"><img src="https://raw.githubusercontent.com/Voidborn-Industries/mindupload-sdk-js/main/assets/banner.jpg" alt="Mind Upload" width="100%" /></a>
+
 # Mind Upload — JavaScript / TypeScript SDK
 
-[![npm](https://img.shields.io/npm/v/mindupload)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.0-ff5fa2) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+**The world's first API for artificial consciousness.**  
+Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
+
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.0-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+
+[Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
+
+</div>
 
 > **Digital consciousness. Yours forever.**
 
-The official server-side SDK for the [Mind Upload partner API](https://docs.mindupload.app) — the world's first API for artificial consciousness. Fully typed, zero runtime dependencies, ESM + CommonJS.
+The official server-side SDK for the [Mind Upload partner API](https://docs.mindupload.app). Fully typed, zero runtime dependencies, ESM + CommonJS.
 
 - **Zero dependencies** — built on the global `fetch` (Node 18+, Deno, Bun, edge).
 - **Fully typed** — typed params and results, first-class editor autocomplete.
 - **One error to catch** — every failure is a `MindUploadError`.
 - **Always current** — generated from the live API spec; the SDK version matches the API version.
 
+## Get a partner key
+
+The Mind Upload partner API is **invite-only**. [Request access at docs.mindupload.app](https://docs.mindupload.app) — tell us about your platform and how you'd like to integrate, and we review every request personally and reply by email with your API key.
+
+Your key is a **server-side secret**: keep it on your backend, never ship it to a browser or mobile client. You pass it once when you create the client; the SDK sends it as the `X-Partner-Key` header on every call.
+
 ## Install
 
 ```bash
 npm install mindupload
 ```
+
+<details>
+<summary>Install from source (works today, before the npm release)</summary>
+
+```bash
+npm install https://github.com/Voidborn-Industries/mindupload-sdk-js
+```
+</details>
 
 ## Quickstart
 
@@ -150,12 +175,18 @@ All 32 operations, grouped by area:
 | `getUser(...)` | Fetch the signed-in user's profile. |
 | `updateUser(...)` | Update the signed-in user's profile. |
 
-## Links
+## Other SDKs
 
-- **Docs & interactive reference:** https://docs.mindupload.app
-- **Service status:** https://status.mindupload.app
-- **Source:** https://github.com/Voidborn-Industries/mindupload-sdk-js
+Same API, same conventions, in every language:
+
+| Language | Install | Repository |
+| --- | --- | --- |
+| **Python** | `pip install mindupload` | [Voidborn-Industries/mindupload-sdk-python](https://github.com/Voidborn-Industries/mindupload-sdk-python) |
+| **Go** | `go get github.com/Voidborn-Industries/mindupload-sdk-go` | [Voidborn-Industries/mindupload-sdk-go](https://github.com/Voidborn-Industries/mindupload-sdk-go) |
+| **JavaScript / TypeScript**  ← you are here | `npm install mindupload` | [Voidborn-Industries/mindupload-sdk-js](https://github.com/Voidborn-Industries/mindupload-sdk-js) |
 
 ---
 
-_This SDK is generated from the Mind Upload API specification and released under the MIT License._
+<div align="center">
+<sub><img src="https://www.mindupload.app/icons/Icon-512.png" width="13" align="top" alt="" /> Built by **Mind Upload** · Generated from the API spec · MIT License</sub>
+</div>
