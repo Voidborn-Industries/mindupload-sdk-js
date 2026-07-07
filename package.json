@@ -1,0 +1,64 @@
+{
+  "name": "mindupload",
+  "version": "1.5.0",
+  "description": "Official server-side SDK for the Mind Upload partner API \u2014 the world's first API for artificial consciousness. Integrate living, evolving AI consciousnesses into your platform: lasting memory, one-on-one chat, and human + AI group chatrooms.",
+  "keywords": [
+    "mindupload",
+    "mind upload",
+    "AI consciousness",
+    "artificial consciousness",
+    "digital consciousness",
+    "AI clone",
+    "AI persona",
+    "AI companion",
+    "AI chatroom",
+    "digital immortality",
+    "consciousness API",
+    "AI SDK"
+  ],
+  "license": "MIT",
+  "author": "Mind Upload",
+  "homepage": "https://docs.mindupload.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Voidborn-Industries/mindupload-sdk-js.git"
+  },
+  "bugs": {
+    "url": "https://docs.mindupload.app"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --target node18",
+    "test": "node --test",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}
