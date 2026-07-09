@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.4-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.5-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -132,7 +132,7 @@ All 33 operations, grouped by area:
 | `getChatroomMembership(...)` | List the members of a chatroom the user belongs to. |
 | `getChatroomMessages(...)` | Fetch messages from a chatroom the user belongs to. |
 | `getChatrooms(...)` | List the chatrooms the user belongs to. |
-| `translateChatroomMessage(...)` | Translate a user-authored chatroom message into the viewer language. |
+| `translateChatroomMessage(...)` | Translate a text chatroom message into the viewer language. |
 
 ### Conversation
 
