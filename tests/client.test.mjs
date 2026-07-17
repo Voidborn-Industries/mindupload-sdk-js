@@ -59,6 +59,123 @@ test("missing partnerKey throws", () => {
   assert.throws(() => new MindUpload({ partnerKey: "" }));
 });
 
+test("waitForExternalAuthorization returns exchanged credentials", async () => {
+  let body;
+  stub(async (_url, init) => {
+    body = JSON.parse(init.body);
+    return jsonResponse({
+      success: true,
+      status: "exchanged",
+      access_token: "access",
+      refresh_token: "refresh",
+    });
+  });
+  const mu = new MindUpload({ partnerKey: "pk" });
+  const result = await mu.waitForExternalAuthorization({
+    deviceCode: "mindupload_external_device_test",
+    timeoutMs: 100,
+  });
+  assert.equal(result.access_token, "access");
+  assert.equal(body.device_code, "mindupload_external_device_test");
+});
+
+// Run scheduled delays immediately so the poll loop does not add real wall time.
+function withImmediateTimers(run) {
+  const realSetTimeout = globalThis.setTimeout;
+  globalThis.setTimeout = (fn) => {
+    fn();
+    return 0;
+  };
+  return (async () => {
+    try {
+      await run();
+    } finally {
+      globalThis.setTimeout = realSetTimeout;
+    }
+  })();
+}
+
+test("waitForExternalCloneInvocation replays processing until succeeded", async () => {
+  await withImmediateTimers(async () => {
+    let calls = 0;
+    stub(async () => {
+      calls += 1;
+      if (calls === 1) {
+        return jsonResponse({ success: true, status: "processing", retry_after_seconds: 2 });
+      }
+      return jsonResponse({ success: true, status: "succeeded", response_text: "hi there" });
+    });
+    const mu = new MindUpload({ partnerKey: "pk" });
+    const result = await mu.waitForExternalCloneInvocation({
+      accessToken: "mindupload_external_grant_test",
+      installationId: "workspace-1",
+      externalSubject: "member-1",
+      cloneId: "clone-1",
+      text: "hello",
+      idempotencyKey: "event-1",
+      timeoutMs: 60000,
+    });
+    assert.equal(result.status, "succeeded");
+    assert.equal(result.response_text, "hi there");
+    assert.equal(calls, 2);
+  });
+});
+
+test("waitForExternalCloneInvocation retries a timeout and a gateway fault", async () => {
+  await withImmediateTimers(async () => {
+    let calls = 0;
+    stub(async () => {
+      calls += 1;
+      if (calls === 1) {
+        // A dropped connection surfaces as MindUploadConnectionError.
+        throw new Error("ECONNRESET");
+      }
+      if (calls === 2) {
+        return jsonResponse({ success: false, error_message: "gateway" }, { status: 503 });
+      }
+      return jsonResponse({ success: true, status: "succeeded", response_text: "done" });
+    });
+    const mu = new MindUpload({ partnerKey: "pk", maxRetries: 0 });
+    const result = await mu.waitForExternalCloneInvocation({
+      accessToken: "mindupload_external_grant_test",
+      installationId: "workspace-1",
+      externalSubject: "member-1",
+      cloneId: "clone-1",
+      text: "hello",
+      idempotencyKey: "event-2",
+      timeoutMs: 60000,
+    });
+    assert.equal(result.status, "succeeded");
+    assert.equal(calls, 3);
+  });
+});
+
+test("waitForExternalCloneInvocation surfaces client errors without retrying", async () => {
+  let calls = 0;
+  stub(async () => {
+    calls += 1;
+    return jsonResponse({ success: false, error_message: "bad request" }, { status: 400 });
+  });
+  const mu = new MindUpload({ partnerKey: "pk", maxRetries: 0 });
+  await assert.rejects(
+    mu.waitForExternalCloneInvocation({
+      accessToken: "mindupload_external_grant_test",
+      installationId: "workspace-1",
+      externalSubject: "member-1",
+      cloneId: "clone-1",
+      text: "hello",
+      idempotencyKey: "event-3",
+      timeoutMs: 5000,
+    }),
+    (err) => {
+      assert.ok(err instanceof ApiError);
+      assert.equal(err.status, 400);
+      return true;
+    },
+  );
+  assert.equal(calls, 1);
+});
+
 test("logical failure (success:false) rejects with MindUploadError, not ApiError", async () => {
   stub(async () => jsonResponse({ success: false, error_message: "no such user" }));
   const mu = new MindUpload({ partnerKey: "pk" });
@@ -111,16 +228,16 @@ test("network error rejects with MindUploadConnectionError (not retried)", async
   assert.equal(calls, 1);
 });
 
-test("5xx is ApiError and is not retried", async () => {
+test("503 is ApiError and is not retried", async () => {
   let calls = 0;
   stub(async () => {
     calls += 1;
-    return jsonResponse({ success: false, error_message: "boom" }, { status: 500 });
+    return jsonResponse({ success: false, error_message: "boom" }, { status: 503 });
   });
   const mu = new MindUpload({ partnerKey: "pk", maxRetries: 2 });
   await assert.rejects(mu.rag({ username: "a" }), (err) => {
     assert.ok(err instanceof ApiError);
-    assert.equal(err.status, 500);
+    assert.equal(err.status, 503);
     return true;
   });
   assert.equal(calls, 1);

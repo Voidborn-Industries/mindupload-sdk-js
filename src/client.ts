@@ -12,7 +12,7 @@ const AUTH_HEADER = "X-Partner-Key";
 // Only server backpressure is retried. Operations are non-idempotent POSTs (rag
 // spends credits, create* mutate), so 5xx / network failures are surfaced
 // immediately rather than risking a duplicate side effect.
-const RETRY_STATUSES = new Set([429, 503]);
+const RETRY_STATUSES = new Set([429]);
 
 /** A response envelope. `success` and `error_message` are always present; any
  * other field the API returns is available by its documented (snake_case) name. */
@@ -29,7 +29,7 @@ export interface ClientOptions {
   /** Default locale sent with every call (per-call `preferredLanguage` overrides). */
   preferredLanguage?: string;
   timeoutMs?: number;
-  /** Retries on 429 / 5xx / network errors, with backoff. Default 2. */
+  /** Retries only explicit 429 rate-limit responses, with backoff. Default 2. */
   maxRetries?: number;
   userAgent?: string;
 }

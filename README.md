@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.8-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.5.9-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -62,6 +62,34 @@ const reply = await mu.rag({
 console.log(reply.response_text);
 ```
 
+## External clone invocation
+
+```ts
+const installationId = "workspace-123";
+const externalSubject = "member-456";
+const authorization = await mu.createExternalAuthorizationRequest({
+  installationId,
+  externalSubject,
+  idempotencyKey: "install-event-1",
+  requestedScopes: ["clone.invoke"],
+});
+console.log(authorization.verification_uri_complete); // Ask the owner to open this URL.
+const grant = await mu.waitForExternalAuthorization({
+  deviceCode: authorization.device_code as string,
+});
+const reply = await mu.invokeExternalClone({
+  accessToken: grant.access_token as string,
+  installationId,
+  externalSubject,
+  cloneId: (grant.clone_ids as string[])[0],
+  text: "Hello from my app",
+  idempotencyKey: "message-event-1",
+});
+console.log(reply.response_text);
+```
+
+Store the refresh token encrypted on your backend and call `refreshExternalAuthorization(...)` when the access token expires.
+
 ## Server-side only
 
 Your **partner key is a secret**. Use this SDK from your backend (Node, Deno, Bun, edge functions) — never ship the key to a browser. For browser apps, call your own backend, which then calls Mind Upload.
@@ -73,7 +101,7 @@ const mu = new MindUpload({
   partnerKey: process.env.MU_PARTNER_KEY!,
   preferredLanguage: "en", // default locale for every call (optional)
   timeoutMs: 30000,
-  maxRetries: 2,            // retries on 429 / 5xx / network, with backoff
+  maxRetries: 2,            // retries explicit 429 responses only
 });
 ```
 
@@ -96,7 +124,7 @@ try {
 
 ## Operations
 
-All 33 operations, grouped by area:
+All 38 operations, grouped by area:
 
 ### AI Consciousnesses
 
@@ -141,6 +169,16 @@ All 33 operations, grouped by area:
 | `getChat(...)` | Fetch the one-on-one conversation history with an AI consciousness. |
 | `rag(...)` | Send a message to an AI consciousness and receive its reply. |
 | `triggerSocial(...)` | Have an AI consciousness proactively join the conversation in a chatroom. |
+
+### External Authorization
+
+| Method | Description |
+| --- | --- |
+| `createExternalAuthorizationRequest(...)` | Start passwordless grant issuance for an external identity and installation. |
+| `exchangeExternalAuthorization(...)` | Poll owner consent and exchange an approval for a clone-scoped grant token. |
+| `inspectExternalAuthorization(...)` | Inspect the scopes, clone resources, expiry, and revocation state of a grant token. |
+| `invokeExternalClone(...)` | Send one idempotent text event to an owner-approved AI consciousness. |
+| `refreshExternalAuthorization(...)` | Refresh a short-lived clone-invocation access token. |
 
 ### Insights
 
