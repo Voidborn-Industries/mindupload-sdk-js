@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.8.0-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.9.0-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -124,7 +124,7 @@ try {
 
 ## Operations
 
-All 38 operations, grouped by area:
+All 39 operations, grouped by area:
 
 ### AI Consciousnesses
 
@@ -179,6 +179,7 @@ All 38 operations, grouped by area:
 | `inspectExternalAuthorization(...)` | Inspect the scopes, clone resources, expiry, and revocation state of a grant token. |
 | `invokeExternalClone(...)` | Send one idempotent text event to an owner-approved AI consciousness. |
 | `refreshExternalAuthorization(...)` | Refresh a short-lived clone-invocation access token. |
+| `uploadExternalMindData(...)` | Upload mind data (text and media) into the owner's own AI consciousness. |
 
 ### Insights
 
