@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.13.1-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.14.0-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -124,7 +124,7 @@ try {
 
 ## Operations
 
-All 52 operations, grouped by area:
+All 56 operations, grouped by area:
 
 ### AI Consciousnesses
 
@@ -232,6 +232,15 @@ All 52 operations, grouped by area:
 | `getTransactionHistory(...)` | List the user's Rabbit balance history (top-ups, spending, earnings, withdrawals, tax), newest first, filterable by category and paged with a cursor. |
 | `getUser(...)` | Fetch the signed-in user's profile. |
 | `updateUser(...)` | Update the signed-in user's profile. |
+
+### Voice Interviews
+
+| Method | Description |
+| --- | --- |
+| `advanceVoiceInterview(...)` | Accept, edit, skip, re-record or abandon the question the user is on, and receive the next one. |
+| `generateVoiceInterviewReport(...)` | Write a finished interview up as prose, in first, second or third person. |
+| `startVoiceInterview(...)` | Begin a spoken interview with one of your end-users, or hand back one they have not finished with. |
+| `transcribeVoiceInterviewAnswer(...)` | Turn one recorded spoken answer into text for the user to check before it is accepted. |
 
 ## Other SDKs
 
