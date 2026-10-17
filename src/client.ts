@@ -19,6 +19,7 @@ const RETRY_STATUSES = new Set([429]);
 export interface Result {
   success: boolean;
   error_message?: string | null;
+  error_code?: string;
   [key: string]: unknown;
 }
 
