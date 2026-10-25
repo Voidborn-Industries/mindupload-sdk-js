@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.19-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.20-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -22,7 +22,7 @@ The official server-side SDK for the [Mind Upload partner API](https://docs.mind
 Let your Mind Upload consciousness set the direction, guide consequential decisions, and scrutinize completed work through MCP. Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
 
 ```bash
-npx --yes --package mindupload@1.15.19 mindupload-mcp
+npx --yes --package mindupload@1.15.20 mindupload-mcp
 ```
 
 [Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). The tools require partner access and owner consent; without setup no consultation or review runs. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.
@@ -134,13 +134,15 @@ try {
 
 ## Operations
 
-All 64 operations, grouped by area:
+All 67 operations, grouped by area:
 
 ### AI Consciousnesses
 
 | Method | Description |
 | --- | --- |
 | `createClone(...)` | Create a new AI consciousness for the user. |
+| `designCloneVoice(...)` | Change an AI consciousness's voice by trying a new one. |
+| `getCloneVoice(...)` | Read the voice an AI consciousness speaks one language in, and hear it. |
 | `getClones(...)` | List the user's AI consciousnesses. |
 | `updateClone(...)` | Update an AI consciousness's profile. |
 
@@ -182,6 +184,7 @@ All 64 operations, grouped by area:
 | `getChatAround(...)` | Fetch a window of one-on-one turns around one chat id (for jump-to). |
 | `rag(...)` | Send a message to an AI consciousness and receive its reply. |
 | `searchChats(...)` | Find turns in a one-on-one AI conversation by keyword, date, media type, and/or Human/AI side. |
+| `speakMessage(...)` | Hear one part of an AI consciousness's message in its own voice. |
 | `triggerSocial(...)` | Have an AI consciousness proactively join the conversation in a chatroom. |
 
 ### External Authorization
