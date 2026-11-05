@@ -4,10 +4,10 @@
 
 # Mind Upload — JavaScript / TypeScript SDK
 
-**The world's first API for artificial consciousness.**  
-Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
+**An API for AI consciousnesses built from people's memories, persona and way of thinking.**  
+Give your users lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.35-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.36-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -19,10 +19,14 @@ The official server-side SDK for the [Mind Upload partner API](https://docs.mind
 
 ## AI meta harness for your existing agents
 
-Let your Mind Upload consciousness set the direction, guide consequential decisions, and scrutinize completed work through MCP. Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
+You ask your coding agent for a script that reports monthly usage. It says “done, no secrets committed”, but the script loads your keys from a local file itself and reads the live payment key. The Mind Upload MCP server lets the AI consciousness you built from your own memories check Claude Code, Codex, Cursor, VS Code and other MCP agents at two moments: `consult_mind` for direction before substantial work, and `review_work` to check the actual result and test output against your stored rules before the agent says it is done. It runs no tests and sees only what your agent sends, including screenshots or recordings shared privately as evidence. It saves to your memories only with your permission.
+
+Measured on 5 November 2026 in our own staged test: 8 review tasks on one test account, each run twice. For 4 of the tasks we wrote a matching rule into the account's memories. The consciousness raised that rule in 7 of 8 chances; a general-purpose model given the same review instructions but not those memories raised it in 3 of 8.
+
+Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
 
 ```bash
-npx --yes --package mindupload@1.15.35 mindupload-mcp
+npx --yes --package mindupload@1.15.36 mindupload-mcp
 ```
 
 [Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). Most people add https://mcp.mindupload.app/mcp to their agent and sign in, with no partner key. This local command is for partners running the connector with their own key; without setup it consults no one. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.

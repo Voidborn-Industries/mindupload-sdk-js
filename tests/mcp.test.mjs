@@ -127,9 +127,13 @@ test("native stdio executable discovers both tools and reports missing setup wit
     assert.deepEqual(tools.map(tool => tool.name).sort(), TOOL_NAMES);
     assert.ok(tools.every(tool => tool.annotations.readOnlyHint && !tool.annotations.openWorldHint));
     // Both invocation tools accept link media, private evidence files and learning.
-    for (const tool of tools.filter(tool => tool.name === "consult_mind" || tool.name === "review_work")) {
+    const invocationTools = tools.filter(tool => tool.name === "consult_mind" || tool.name === "review_work");
+    for (const tool of invocationTools) {
       assert.ok(tool.inputSchema.properties.media_evidence && tool.inputSchema.properties.evidence_files && tool.inputSchema.properties.learn, tool.name);
     }
+    // Agents choose these tools and their arguments from this text before any setup exists, so none may be blank.
+    assert.ok(invocationTools.every(tool => tool.description.includes("Mind Upload consciousness")));
+    assert.ok(invocationTools.every(tool => Object.values(tool.inputSchema.properties).every(property => property.description)));
     const result = await client.callTool({ name: "review_work", arguments: REVIEW_ARGUMENTS });
     assert.equal(result.structuredContent.status, "setup_required");
     assert.match(result.structuredContent.message, /no review has run/);
