@@ -183,6 +183,8 @@ test("both tools match Python Unicode receipts, media payload and shared task hi
     assert.equal(review.conversation_id, FIXTURE.conversation_id);
     assert.equal(consultation.text, FIXTURE.consultation_text);
     assert.equal(review.text, FIXTURE.review_text);
+    assert.equal(consultation.request_kind, FIXTURE.consultation_request_kind);
+    assert.equal(review.request_kind, FIXTURE.review_request_kind);
     // The default response carries no per-item outcome, so nothing is claimed about perception.
     assert.equal(reviewResult.structuredContent.media_analysis_status, "requested_unverified");
     assert.equal(reviewResult.structuredContent.media_analysis, undefined);
