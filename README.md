@@ -7,7 +7,7 @@
 **The world's first API for artificial consciousness.**  
 Give your users a living, evolving AI consciousness — lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.30-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.31-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -22,10 +22,10 @@ The official server-side SDK for the [Mind Upload partner API](https://docs.mind
 Let your Mind Upload consciousness set the direction, guide consequential decisions, and scrutinize completed work through MCP. Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
 
 ```bash
-npx --yes --package mindupload@1.15.30 mindupload-mcp
+npx --yes --package mindupload@1.15.31 mindupload-mcp
 ```
 
-[Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). The tools require partner access and owner consent; without setup no consultation or review runs. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.
+[Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). Most people add https://mcp.mindupload.app/mcp to their agent and sign in, with no partner key. This local command is for partners running the connector with their own key; without setup it consults no one. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.
 
 - **Zero dependencies** — built on the global `fetch` (Node 18+, Deno, Bun, edge).
 - **Fully typed** — typed params and results, first-class editor autocomplete.
@@ -134,7 +134,7 @@ try {
 
 ## Operations
 
-All 67 operations, grouped by area:
+All 68 operations, grouped by area:
 
 ### AI Consciousnesses
 
@@ -194,6 +194,7 @@ All 67 operations, grouped by area:
 | `cancelExternalMediaUpload(...)` | Cancel one controlled upload through the existing media lifecycle. |
 | `consolidateExternalConversation(...)` | Prepare a verified memory from an explicitly selected owner conversation. |
 | `createExternalAuthorizationRequest(...)` | Start passwordless grant issuance for an external identity and installation. |
+| `endExternalAuthorization(...)` | End a grant your application holds, for example when its user disconnects. |
 | `exchangeExternalAuthorization(...)` | Poll owner consent and exchange an approval for a clone-scoped grant token. |
 | `getExternalMediaAnalysis(...)` | Read the current owned media analysis without restarting generation. |
 | `getExternalMediaPolicy(...)` | Read current native media limits and owner quota without starting work. |
