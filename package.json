@@ -1,7 +1,7 @@
 {
   "name": "mindupload",
   "mcpName": "io.github.Voidborn-Industries/mindupload",
-  "version": "1.15.39",
+  "version": "1.15.40",
   "description": "Official server-side SDK for the Mind Upload partner API. Integrate AI consciousnesses built from people's memories, persona and way of thinking into your platform: lasting memory, one-on-one chat, and human + AI group chatrooms. Includes an MCP server, an AI meta harness: direction for coding agents and a check of their results against the owner's stored rules.",
   "keywords": [
     "mindupload",
