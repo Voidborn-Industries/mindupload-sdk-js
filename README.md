@@ -7,7 +7,7 @@
 **An API for AI consciousnesses built from people's memories, persona and way of thinking.**  
 Give your users lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.38-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.39-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -26,7 +26,7 @@ Measured on 5 November 2026 in our own staged test: 8 review tasks on one test a
 Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
 
 ```bash
-npx --yes --package mindupload@1.15.38 mindupload-mcp
+npx --yes --package mindupload@1.15.39 mindupload-mcp
 ```
 
 [Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). Most people add https://mcp.mindupload.app/mcp to their agent and sign in, with no partner key. This local command is for partners running the connector with their own key; without setup it consults no one. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.
@@ -138,7 +138,7 @@ try {
 
 ## Operations
 
-All 68 operations, grouped by area:
+All 73 operations, grouped by area:
 
 ### AI Consciousnesses
 
@@ -200,14 +200,19 @@ All 68 operations, grouped by area:
 | `createExternalAuthorizationRequest(...)` | Start passwordless grant issuance for an external identity and installation. |
 | `endExternalAuthorization(...)` | End a grant your application holds, for example when its user disconnects. |
 | `exchangeExternalAuthorization(...)` | Poll owner consent and exchange an approval for a clone-scoped grant token. |
+| `getExternalChat(...)` | Read the owner's own chat with their AI consciousness, a page at a time. |
+| `getExternalChatAround(...)` | Open the owner's own chat around one turn. |
 | `getExternalMediaAnalysis(...)` | Read the current owned media analysis without restarting generation. |
 | `getExternalMediaPolicy(...)` | Read current native media limits and owner quota without starting work. |
 | `getExternalQuarantinedTexts(...)` | List pending memories of the owner's granted AI consciousness. |
 | `inspectExternalAuthorization(...)` | Inspect the scopes, clone resources, expiry, and revocation state of a grant token. |
 | `invokeExternalClone(...)` | Send one idempotent text event to an owner-approved AI consciousness. |
+| `openExternalConversation(...)` | Let the owner's AI consciousness speak first as the owner opens their chat. |
 | `refreshExternalAuthorization(...)` | Refresh a short-lived clone-invocation access token. |
 | `requestExternalMediaUpload(...)` | Authorize one exact media upload to the owner’s granted AI consciousness. Needs `clone:evidence` (analysis only, never kept as a memory) or `clone:upload`. |
 | `reviewExternalQuarantinedText(...)` | Edit, approve or reject the displayed revision of one pending memory. |
+| `searchExternalChats(...)` | Find turns in the owner's own chat with their AI consciousness. |
+| `speakExternalChat(...)` | Hear one part of a reply in the owner's chat, in the AI consciousness's own voice. |
 | `startExternalMediaAnalysis(...)` | Explicitly describe one completed controlled upload. |
 | `uploadExternalMindData(...)` | Upload mind data (text and media) into the owner's own AI consciousness. |
 
