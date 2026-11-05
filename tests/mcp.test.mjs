@@ -17,7 +17,6 @@ const REVIEW_ARGUMENTS = { user_request: "Keep drafts", work: "Cleared before ac
 const MAX_QUESTION_CHARACTERS = 8000;
 const MAX_IDENTIFIER_CHARACTERS = 256;
 const REQUESTED_SCOPES = ["clone:invoke", "clone:evidence", "clone:upload", "clone:review", "clone:learn"];
-const OPTIONAL_SCOPES = ["clone:upload", "clone:review", "clone:learn"];
 const TOOL_NAMES = ["consult_mind", "list_pending_memories", "remember", "review_pending_memory", "review_work"];
 const SCREENSHOT_BYTES = Buffer.from([0x89, ...Buffer.from("PNG fictional screenshot bytes", "latin1")]);
 const RECORDING_BYTES = Buffer.from("RIFF fictional recording bytes", "latin1");
@@ -180,9 +179,31 @@ test("both tools match Python Unicode receipts, media payload and shared task hi
     assert.equal(review.conversation_id, FIXTURE.conversation_id);
     assert.equal(consultation.text, FIXTURE.consultation_text);
     assert.equal(review.text, FIXTURE.review_text);
+    // The default response carries no per-item outcome, so nothing is claimed about perception.
     assert.equal(reviewResult.structuredContent.media_analysis_status, "requested_unverified");
+    assert.equal(reviewResult.structuredContent.media_analysis, undefined);
     assert.deepEqual(reviewResult.structuredContent.media_evidence, FIXTURE.media_evidence);
   }, { externalSubject: FIXTURE.external_subject, cloneId: FIXTURE.clone_id, grant: { ...GRANT, clone_ids: [FIXTURE.clone_id], clone_nicknames: { [FIXTURE.clone_id]: "Fixture mind" } } });
+});
+
+test("both tools report the service's per-item media outcomes exactly as the shared fixture does", async () => {
+  // One harness per shared case: each case is a different invocation response.
+  for (const mediaCase of FIXTURE.media_analysis_cases) {
+    await withHarness(async harness => {
+      await harness.authorize();
+      const direction = await harness.call("consult_mind", { ...CONSULT_ARGUMENTS, decision_id: "media-direction", media_evidence: FIXTURE.media_evidence });
+      const review = await harness.call("review_work", { ...REVIEW_ARGUMENTS, media_evidence: FIXTURE.media_evidence });
+      // The two tools share one reporting path and must agree with the other two connectors.
+      for (const result of [direction, review]) {
+        assert.equal(result.structuredContent.media_analysis_status, mediaCase.media_analysis_status, mediaCase.name);
+        assert.deepEqual(result.structuredContent.media_analysis, mediaCase.media_analysis ?? undefined, mediaCase.name);
+        assert.deepEqual(result.structuredContent.media_evidence, FIXTURE.media_evidence, mediaCase.name);
+      }
+    }, { response: operation => operation === "invoke_external_clone" ? new Response(JSON.stringify({
+      success: true, status: "succeeded", response_text: "Personal response", invocation_id: "invocation-one", idempotent_replay: false,
+      ...(mediaCase.service_media_analysis === null ? {} : { media_analysis: mediaCase.service_media_analysis }),
+    }), { status: 200 }) : undefined });
+  }
 });
 
 test("quoted media tags cannot request perception without explicit media evidence", async () => {
@@ -270,11 +291,11 @@ test("overlapping protocol calls serialize actual SDK invocations", async () => 
   } });
 });
 
-test("consent requests every permission with saving, reviewing and learning unticked", async () => {
+test("consent requests every permission, all ticked on the approval screen", async () => {
   await withHarness(async harness => {
     await harness.call("consult_mind", CONSULT_ARGUMENTS);
     assert.deepEqual(harness.calls[0].body.requested_scopes, REQUESTED_SCOPES);
-    assert.deepEqual(harness.calls[0].body.optional_scopes, OPTIONAL_SCOPES);
+    assert.equal(harness.calls[0].body.optional_scopes, undefined);
   });
 });
 

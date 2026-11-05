@@ -34,5 +34,315 @@
     "[image#😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀:https://evidence.example.com/astral.png]",
     "[image:httpſ://evidence.example.com/longs.png]",
     "[image:https://evidence.example.com/[audio:https://evidence.example.com/nested.wav]]"
+  ],
+  "media_analysis_cases": [
+    {
+      "name": "partly perceived",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "download_failed"
+        }
+      ],
+      "media_analysis": [
+        {
+          "kind": "image",
+          "status": "analyzed"
+        },
+        {
+          "kind": "audio",
+          "status": "refused",
+          "reason": "hosted_by_mind_upload"
+        },
+        {
+          "kind": "video",
+          "status": "failed",
+          "reason": "download_failed"
+        }
+      ],
+      "media_analysis_status": "partially_analyzed"
+    },
+    {
+      "name": "all perceived",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "analyzed"
+        }
+      ],
+      "media_analysis": [
+        {
+          "kind": "image",
+          "status": "analyzed"
+        },
+        {
+          "kind": "audio",
+          "status": "analyzed"
+        },
+        {
+          "kind": "video",
+          "status": "analyzed"
+        }
+      ],
+      "media_analysis_status": "analyzed"
+    },
+    {
+      "name": "none perceived",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "export_not_allowed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "export_not_allowed"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "time_budget_exhausted"
+        }
+      ],
+      "media_analysis": [
+        {
+          "kind": "image",
+          "status": "refused",
+          "reason": "export_not_allowed"
+        },
+        {
+          "kind": "audio",
+          "status": "refused",
+          "reason": "export_not_allowed"
+        },
+        {
+          "kind": "video",
+          "status": "failed",
+          "reason": "time_budget_exhausted"
+        }
+      ],
+      "media_analysis_status": "not_analyzed"
+    },
+    {
+      "name": "no outcomes returned",
+      "service_media_analysis": null,
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "fewer outcomes than items",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "analyzed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "outcome kinds out of order",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "analyzed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "outcome without a status",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "analyzed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "reason that is not text",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": 42
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "null reason",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": null
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "download_failed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "entry that is not an object",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        null,
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "download_failed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "media_analysis that is not a list",
+      "service_media_analysis": {
+        "length": 3,
+        "0": {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        "1": {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        "2": {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "download_failed"
+        }
+      },
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "unknown status",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "perceived",
+          "analysis_outcome_reason": "download_failed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "analyzed with a reason",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed",
+          "analysis_outcome_reason": "download_failed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed",
+          "analysis_outcome_reason": "download_failed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    },
+    {
+      "name": "failed without a reason",
+      "service_media_analysis": [
+        {
+          "media_type": "image",
+          "analysis_outcome": "analyzed"
+        },
+        {
+          "media_type": "audio",
+          "analysis_outcome": "refused",
+          "analysis_outcome_reason": "hosted_by_mind_upload"
+        },
+        {
+          "media_type": "video",
+          "analysis_outcome": "failed"
+        }
+      ],
+      "media_analysis": null,
+      "media_analysis_status": "requested_unverified"
+    }
   ]
 }
