@@ -214,6 +214,23 @@ test("429 retries then rejects with RateLimitError carrying retryAfter", async (
   assert.equal(calls, 2);
 });
 
+test("429 whose wait outlasts a retry rejects at once, without sleeping", async () => {
+  let calls = 0;
+  stub(async () => {
+    calls += 1;
+    return jsonResponse({ success: false, error_message: "wait" }, { status: 429, headers: { "Retry-After": "287" } });
+  });
+  const mu = new MindUpload({ partnerKey: "pk", maxRetries: 2 });
+  const started = Date.now();
+  await assert.rejects(mu.rag({ username: "a" }), (err) => {
+    assert.ok(err instanceof RateLimitError);
+    assert.equal(err.retryAfter, 287);
+    return true;
+  });
+  assert.equal(calls, 1);
+  assert.ok(Date.now() - started < 1000, "a wait longer than a retry is never slept through");
+});
+
 test("network error rejects with MindUploadConnectionError (not retried)", async () => {
   let calls = 0;
   stub(async () => {

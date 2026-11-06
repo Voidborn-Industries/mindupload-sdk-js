@@ -30,7 +30,8 @@ export interface ClientOptions {
   /** Default locale sent with every call (per-call `preferredLanguage` overrides). */
   preferredLanguage?: string;
   timeoutMs?: number;
-  /** Retries only explicit 429 rate-limit responses, with backoff. Default 2. */
+  /** Retries only explicit 429 rate-limit responses, with backoff, and only when the advised wait is at most
+   * 60 seconds; a longer wait rejects at once with RateLimitError.retryAfter. Default 2. */
   maxRetries?: number;
   userAgent?: string;
 }
@@ -63,11 +64,19 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function backoffMs(attempt: number, retryAfter: string | null): number {
-  if (retryAfter) {
-    const seconds = Number(retryAfter);
-    if (Number.isFinite(seconds)) return Math.min(seconds * 1000, 60000);
-  }
+// The longest server-advised wait a call sleeps through before retrying. A longer wait (the
+// spacing between memory preparations, a daily cap) cannot end within a retry, so the call
+// rejects at once with that wait in RateLimitError.retryAfter for the caller to schedule.
+const MAX_RETRY_WAIT_SECONDS = 60;
+
+/** The Retry-After header in seconds, or undefined when absent or not a number. */
+function retryAfterSeconds(header: string | null): number | undefined {
+  const seconds = header ? Number(header) : undefined;
+  return seconds !== undefined && Number.isFinite(seconds) ? seconds : undefined;
+}
+
+function backoffMs(attempt: number, retryAfter: number | undefined): number {
+  if (retryAfter !== undefined) return retryAfter * 1000;
   return Math.min(500 * 2 ** (attempt - 1), 8000);
 }
 
@@ -144,12 +153,14 @@ export class MindUploadBase {
       }
 
       if (!response.ok) {
-        if (RETRY_STATUSES.has(response.status) && attempt < this.maxRetries) {
+        const retryAfter = retryAfterSeconds(response.headers.get("Retry-After"));
+        const waitFitsARetry = retryAfter === undefined || retryAfter <= MAX_RETRY_WAIT_SECONDS;
+        if (RETRY_STATUSES.has(response.status) && attempt < this.maxRetries && waitFitsARetry) {
           attempt += 1;
-          await sleep(backoffMs(attempt, response.headers.get("Retry-After")));
+          await sleep(backoffMs(attempt, retryAfter));
           continue;
         }
-        throw this.errorFor(response.status, data, operation, response.headers.get("Retry-After"));
+        throw this.errorFor(response.status, data, operation, retryAfter);
       }
 
       if (!data.success) {
@@ -164,14 +175,10 @@ export class MindUploadBase {
     return abortSignal && typeof abortSignal.timeout === "function" ? abortSignal.timeout(this.timeoutMs) : undefined;
   }
 
-  private errorFor(status: number, data: Result, operation: string, retryAfterHeader: string | null): MindUploadError {
+  private errorFor(status: number, data: Result, operation: string, retryAfter: number | undefined): MindUploadError {
     const message = (data && (data.error_message as string)) || `HTTP ${status}`;
     if (status === 401) return new AuthenticationError(message, { status, operation, response: data });
-    if (status === 429) {
-      const parsed = retryAfterHeader ? Number(retryAfterHeader) : undefined;
-      const retryAfter = parsed !== undefined && Number.isFinite(parsed) ? parsed : undefined;
-      return new RateLimitError(message, { status, operation, response: data, retryAfter });
-    }
+    if (status === 429) return new RateLimitError(message, { status, operation, response: data, retryAfter });
     return new ApiError(message, { status, operation, response: data });
   }
 }
