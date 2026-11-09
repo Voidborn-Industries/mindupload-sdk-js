@@ -7,7 +7,7 @@
 **An API for AI consciousnesses built from people's memories, persona and way of thinking.**  
 Give your users lasting memory, one-on-one chat, and human + AI group chatrooms.
 
-[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.43-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
+[![npm](https://img.shields.io/npm/v/mindupload?color=ff006e)](https://www.npmjs.com/package/mindupload) [![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE) ![API](https://img.shields.io/badge/API-v1.15.44-ff6b00) ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen) [![Docs](https://img.shields.io/badge/docs-mindupload.app-8b5cf6)](https://docs.mindupload.app)
 
 [Documentation](https://docs.mindupload.app) · [Get a key](https://docs.mindupload.app) · [Status](https://status.mindupload.app) · [Other SDKs](#other-sdks)
 
@@ -26,7 +26,7 @@ Measured on 5 November 2026 with a blind grader: a coding agent reviewing alone 
 Your agent and project can use any language. The native connector runs on Node 20+; it does not require Python.
 
 ```bash
-npx --yes --package mindupload@1.15.43 mindupload-mcp
+npx --yes --package mindupload@1.15.44 mindupload-mcp
 ```
 
 [Install and connect your consciousness](https://docs.mindupload.app/mcp) · [Host setup and owner consent](https://github.com/Voidborn-Industries/mindupload-sdk-python/blob/main/MCP.md). Most people add https://mcp.mindupload.app/mcp to their agent and sign in, with no partner key. This local command is for partners running the connector with their own key; without setup it consults no one. Existing account/subscription and partner access rules apply. The separate SDK entry below continues to support Node 18+, Deno, Bun, and edge runtimes.
